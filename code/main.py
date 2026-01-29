@@ -1,6 +1,6 @@
 import pygame, sys, time
 from settings import *
-from sprites import BG
+from sprites import BG, Ground
 
 gem = 2
 
@@ -22,7 +22,8 @@ class Game:
         self.scale_factor = WINDOW_HEIGHT / bg_height
         
         # sprite setup
-        BG(self.all_sprites)
+        BG(self.all_sprites, self.scale_factor)
+        Ground(self.all_sprites,self.scale_factor)
 
     def run(self):
         last_time = time.time()

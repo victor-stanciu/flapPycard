@@ -1,5 +1,8 @@
 import pygame, sys, time
 from settings import *
+from sprites import BG
+
+gem = 2
 
 class Game:
     def __init__(self):
@@ -9,6 +12,17 @@ class Game:
         self.display_surface = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
         pygame.display.set_caption('Flap Pycard')
         self.clock = pygame.time.Clock()
+
+        # sprite groups
+        self.all_sprites = pygame.sprite.Group()
+        self.collision_sprites = pygame.sprite.Group()
+
+        # scale factor
+        bg_height = pygame.image.load('../graphics/background.png').get_height()
+        self.scale_factor = WINDOW_HEIGHT / bg_height
+        
+        # sprite setup
+        BG(self.all_sprites)
 
     def run(self):
         last_time = time.time()
@@ -25,10 +39,16 @@ class Game:
                     sys.exit()
 
             # game logic
+            self.display_surface.fill("black")
+            self.all_sprites.update(dt)
+            self.all_sprites.draw(self.display_surface)
+
             pygame.display.update()
             self.clock.tick(FRAMERATE)
-            
+
+
 if __name__ == '__main__':
     game = Game()
     game.run()
 
+# 25.00
